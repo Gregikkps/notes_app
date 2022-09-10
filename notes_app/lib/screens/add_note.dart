@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/components/state_button.dart';
+import 'package:notes_app/data/notes/note_model.dart';
 import 'package:notes_app/data/notes/notes_service.dart';
 
 class AddNoteScreen extends StatefulWidget {
@@ -11,6 +12,7 @@ class AddNoteScreen extends StatefulWidget {
 
 class _AddNoteScreenState extends State<AddNoteScreen> {
   final contentController = TextEditingController();
+  Note? note;
 
   SaveButtonState saveButtonState = SaveButtonState.idle;
 
@@ -22,31 +24,47 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
 
   void submit() async {
     setButtonState(SaveButtonState.loading);
-    NotesService.create(contentController.text);
+
+    try {
+      note = await NotesService.create(contentController.text);
+
+      setButtonState(SaveButtonState.success);
+      Future.delayed(const Duration(milliseconds: 500), () {
+        Navigator.pop(context, note);
+      });
+    } catch (e) {
+      setButtonState(SaveButtonState.error);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Add note"),
-        actions: [
-          SaveButton(
-            state: saveButtonState,
-            onPressed: () {
-              submit();
-            },
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          TextFormField(
-            controller: contentController,
-            minLines: 3,
-            maxLines: 100,
-          ),
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, note);
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Add note"),
+          actions: [
+            SaveButton(
+              state: saveButtonState,
+              onPressed: () {
+                submit();
+              },
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            TextFormField(
+              controller: contentController,
+              minLines: 3,
+              maxLines: 100,
+            ),
+          ],
+        ),
       ),
     );
   }

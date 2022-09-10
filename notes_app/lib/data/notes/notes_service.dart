@@ -13,6 +13,23 @@ class NotesService {
     );
 
     await db.insert('notes', note.toJson());
+
+    return note;
+  }
+
+  static Future<Note> createWithError(String content) async {
+    final db = await DatabaseHelper.connect();
+
+    final note = Note(
+      id: DateTime.now().microsecondsSinceEpoch.toString(),
+      content: content,
+      // ignore: null_check_always_fails
+      createdAt: null!,
+    );
+
+    // ignore: dead_code
+    await db.insert('notes', note.toJson());
+
     return note;
   }
 

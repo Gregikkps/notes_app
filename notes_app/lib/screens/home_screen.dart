@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Note> notes = [];
 
   Future<List<Note>> _fetchNotes() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 500));
     final notes = await NotesService.findAll();
     return notes;
   }
@@ -30,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     initialFetch();
-
     super.initState();
   }
 
@@ -55,22 +54,29 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final note = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const AddNoteScreen(),
             ),
           );
+          if (note != null) {
+            initialFetch();
+          }
         },
         child: const Icon(Icons.add),
       ),
-      body: ListView.builder(
+      body: ListView.separated(
+        separatorBuilder: (context, index) {
+          return const Divider();
+        },
         itemCount: notes.length,
         itemBuilder: (BuildContext context, int index) {
           final note = notes[index];
 
           return ListTile(
+            tileColor: Colors.grey,
             title: Text(note.id),
             subtitle: Text(note.content),
           );

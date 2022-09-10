@@ -15,6 +15,7 @@ class SaveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (state == SaveButtonState.error) {}
     return TextButton(
       onPressed: onPressed,
       child: Text(state.toString()),
