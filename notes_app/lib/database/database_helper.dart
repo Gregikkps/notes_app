@@ -21,4 +21,14 @@ class DatabaseHelper {
       )
       ''');
   }
+
+  static Future<Database> connect() async {
+    final databasesPath = await getDatabasesPath();
+    final path = join(databasesPath, 'notes.db');
+    final db = await openDatabase(
+      path,
+      version: 1,
+    );
+    return db;
+  }
 }

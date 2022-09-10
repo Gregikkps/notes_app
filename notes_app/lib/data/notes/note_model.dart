@@ -13,6 +13,6 @@ class Note {
   Map<String, dynamic> toJson() => {
         'id': id,
         'content': content,
-        'createdAt': createdAt,
+        'createdAt': createdAt.toIso8601String(),
       };
 }
