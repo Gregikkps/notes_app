@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/components/state_button.dart';
 import 'package:notes_app/data/notes/notes_service.dart';
-import 'package:notes_app/database/database_helper.dart';
 
 class AddNoteScreen extends StatefulWidget {
   const AddNoteScreen({super.key});
@@ -23,7 +22,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
 
   void submit() async {
     setButtonState(SaveButtonState.loading);
-    NotesService().create(contentController.text);
+    NotesService.create(contentController.text);
   }
 
   @override

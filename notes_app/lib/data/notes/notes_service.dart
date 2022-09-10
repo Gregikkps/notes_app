@@ -3,7 +3,7 @@ import 'package:notes_app/database/database_helper.dart';
 import 'note_model.dart';
 
 class NotesService {
-  Future<Note> create(String content) async {
+  static Future<Note> create(String content) async {
     final db = await DatabaseHelper.connect();
 
     final note = Note(
@@ -16,7 +16,7 @@ class NotesService {
     return note;
   }
 
-  Future<List<Note>> findAll() async {
+  static Future<List<Note>> findAll() async {
     final db = await DatabaseHelper.connect();
     final notes = await db.query(
       'notes',
