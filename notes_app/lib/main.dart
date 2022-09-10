@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/database/database_helper.dart';
 import 'package:notes_app/screens/home_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  DatabaseHelper.init();
+  await DatabaseHelper.init();
   runApp(const MyApp());
 }
 
