@@ -1,17 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/components/state_button.dart';
 
-class AddNoteScreen extends StatelessWidget {
+class AddNoteScreen extends StatefulWidget {
   const AddNoteScreen({super.key});
 
   @override
+  State<AddNoteScreen> createState() => _AddNoteScreenState();
+}
+
+class _AddNoteScreenState extends State<AddNoteScreen> {
+  final contentController = TextEditingController();
+
+  SaveButtonState saveButtonState = SaveButtonState.idle;
+
+  void setButtonState(SaveButtonState state) {
+    setState(() {
+      saveButtonState = state;
+    });
+  }
+
+  void submit() {
+    setButtonState(SaveButtonState.loading);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final contentController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add note"),
-        actions: const [
-          StateButton(),
+        actions: [
+          SaveButton(
+            state: saveButtonState,
+            onPressed: () {
+              submit();
+            },
+          ),
         ],
       ),
       body: Column(
