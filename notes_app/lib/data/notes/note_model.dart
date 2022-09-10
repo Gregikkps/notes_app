@@ -8,7 +8,7 @@ class Note {
   Note.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         content = json['content'],
-        createdAt = json['createdAt'];
+        createdAt = DateTime.parse(json['createdAt']);
 
   Map<String, dynamic> toJson() => {
         'id': id,

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:notes_app/data/notes/notes.dart';
+import 'package:notes_app/database/database_helper.dart';
 import 'package:notes_app/screens/add_note.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,10 +13,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  StreamController streamController = StreamController();
+  List<Note> notes = [];
+
   Future<List<Note>> _fetchNotes() async {
     await Future.delayed(const Duration(seconds: 2));
-    final notes = NotesService.findAll();
+    final notes = await NotesService.findAll();
     return notes;
+  }
+
+  void initialFetch() async {
+    notes = await _fetchNotes();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    initialFetch();
+
+    super.initState();
   }
 
   @override
@@ -27,6 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
               await NotesService.findAll();
             },
             child: const Text('Read'),
+          ),
+          TextButton(
+            onPressed: () async {
+              await DatabaseHelper.destroy();
+            },
+            child: const Text('Destroy'),
           )
         ],
       ),
@@ -41,10 +65,16 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: const Icon(Icons.add),
       ),
-      body: ListView(
-        children: const [
-          ListTile(),
-        ],
+      body: ListView.builder(
+        itemCount: notes.length,
+        itemBuilder: (BuildContext context, int index) {
+          final note = notes[index];
+
+          return ListTile(
+            title: Text(note.id),
+            subtitle: Text(note.content),
+          );
+        },
       ),
     );
   }

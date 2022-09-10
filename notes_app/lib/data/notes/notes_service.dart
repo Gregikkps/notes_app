@@ -24,6 +24,5 @@ class NotesService {
     );
 
     return notes.map((note) => Note.fromJson(note)).toList();
-    // return notes;
   }
 }

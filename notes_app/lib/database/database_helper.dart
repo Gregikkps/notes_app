@@ -2,9 +2,14 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DatabaseHelper {
-  static Future<void> init() async {
+  static Future<String> getDatabasePath() async {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, 'notes.db');
+    return path;
+  }
+
+  static Future<void> init() async {
+    final path = await getDatabasePath();
     await openDatabase(
       path,
       version: 1,
@@ -23,12 +28,16 @@ class DatabaseHelper {
   }
 
   static Future<Database> connect() async {
-    final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'notes.db');
+    final path = await getDatabasePath();
     final db = await openDatabase(
       path,
       version: 1,
     );
     return db;
+  }
+
+  static Future destroy() async {
+    final path = await getDatabasePath();
+    await deleteDatabase(path);
   }
 }
