@@ -19,8 +19,7 @@ class DatabaseHelper {
 
   static void _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE notes(
-          id TEXT,
+      CREATE TABLE notes(         
           content TEXT,
           createdAt TEXT
       )

@@ -80,7 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
             subtitle: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(DateFormat('yyyy-MM-dd – kk:mm').format(note.createdAt)),
+                Text(
+                  DateFormat('yyyy-MM-dd – kk:mm').format(note.createdAt),
+                ),
               ],
             ),
           );

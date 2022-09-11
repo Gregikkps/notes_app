@@ -71,7 +71,10 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
             TextFormField(
               controller: contentController,
               minLines: 3,
-              maxLines: 100,
+              maxLines: 20,
+              decoration: const InputDecoration.collapsed(
+                hintText: 'Type your note here.',
+              ),
             ),
           ],
         ),
