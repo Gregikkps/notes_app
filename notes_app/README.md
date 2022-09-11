@@ -1,16 +1,14 @@
-# notes_app
+# Note app
 
-A new Flutter project.
+## Info
+flutter version 3.3.1
 
-## Getting Started
+## Screens
 
-This project is a starting point for a Flutter application.
+![home_screen](https://user-images.githubusercontent.com/76614984/189546219-f8c44570-5973-4bc2-8e52-f26c6e3fc75e.png)
+![add_note](https://user-images.githubusercontent.com/76614984/189546216-744a578e-b4d3-44e6-839b-adb7826ee47d.png)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
