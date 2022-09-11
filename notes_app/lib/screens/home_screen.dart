@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:notes_app/data/notes/notes.dart';
-import 'package:notes_app/database/database_helper.dart';
 import 'package:notes_app/screens/add_note.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,20 +38,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Notes"),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              await NotesService.findAll();
-            },
-            child: const Text('Read'),
-          ),
-          TextButton(
-            onPressed: () async {
-              await DatabaseHelper.destroy();
-            },
-            child: const Text('Destroy'),
-          )
-        ],
+        // actions: [
+        //   TextButton(
+        //     onPressed: () async {
+        //       await NotesService.findAll();
+        //     },
+        //     child: const Text('Read'),
+        //   ),
+        //   TextButton(
+        //     onPressed: () async {
+        //       await DatabaseHelper.destroy();
+        //     },
+        //     child: const Text('Destroy'),
+        //   )
+        // ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -76,9 +76,13 @@ class _HomeScreenState extends State<HomeScreen> {
           final note = notes[index];
 
           return ListTile(
-            tileColor: Colors.grey,
-            title: Text(note.id),
-            subtitle: Text(note.content),
+            title: Text(note.content),
+            subtitle: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(DateFormat('yyyy-MM-dd – kk:mm').format(note.createdAt)),
+              ],
+            ),
           );
         },
       ),
