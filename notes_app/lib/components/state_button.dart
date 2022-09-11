@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 enum SaveButtonState {
-  idle,
   loading,
   success,
   error,
@@ -15,10 +14,15 @@ class SaveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (state == SaveButtonState.error) {}
+    if (state == SaveButtonState.loading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return TextButton(
       onPressed: onPressed,
-      child: Text(state.toString()),
+      child: const Text("Save"),
     );
   }
 }

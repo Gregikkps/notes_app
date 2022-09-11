@@ -14,7 +14,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   final contentController = TextEditingController();
   Note? note;
 
-  SaveButtonState saveButtonState = SaveButtonState.idle;
+  SaveButtonState saveButtonState = SaveButtonState.success;
 
   void setButtonState(SaveButtonState state) {
     setState(() {
@@ -25,16 +25,26 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   void submit() async {
     setButtonState(SaveButtonState.loading);
 
-    try {
-      note = await NotesService.create(contentController.text);
+    Future.delayed(const Duration(milliseconds: 1000), () async {
+      try {
+        note = await NotesService.create(contentController.text);
 
-      setButtonState(SaveButtonState.success);
-      Future.delayed(const Duration(milliseconds: 500), () {
-        Navigator.pop(context, note);
-      });
-    } catch (e) {
-      setButtonState(SaveButtonState.error);
-    }
+        // Use this line to create note with mocked error
+        // note = await NotesService.createWithError(contentController.text);
+
+        Future.delayed(const Duration(milliseconds: 1000), () {
+          setButtonState(SaveButtonState.success);
+          Navigator.pop(context, note);
+        });
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Ups, somenthing went wrong."),
+          ),
+        );
+        setButtonState(SaveButtonState.error);
+      }
+    });
   }
 
   @override
